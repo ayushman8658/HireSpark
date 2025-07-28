@@ -7,6 +7,12 @@ import axios from "axios";
 import { USER_API_ENDPOINT } from "@/utils/data";
 import { toast } from "sonner";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useSelector } from 'react-redux';
+
+import { setLoading } from "@/redux/authSlice"; // adjust the path based on your folder structure
+
+
 
 const Login = () => {
   const [input, setInput] = useState({
@@ -15,6 +21,8 @@ const Login = () => {
     role: "",
   });
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { loading } = useSelector((state) => state.auth); // Access loading state from Redux store
   const changeEventhandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
@@ -25,6 +33,8 @@ const Login = () => {
     e.preventDefault();
 
     try {
+      // Dispatch loading action
+      dispatch(setLoading(true));
       const response = await axios.post(`${USER_API_ENDPOINT}/login`, input, {
         headers: {
           "Content-Type": "application/json",
@@ -43,6 +53,9 @@ const Login = () => {
         ? error.response.data.message
         : "Login failed. Please try again.";
       toast.error(errorMessage);
+    } finally {
+      // Dispatch loading action to false after the request is complete
+      dispatch(setLoading(false));
     }
   };
   // This component renders a login form with fields for email, password, and user role selection.
@@ -104,24 +117,28 @@ const Login = () => {
               </div>
             </RadioGroup>
           </div>
-
-          <div className="flex items-center justify-between my-4">
+          {loading ? (
+            <div>
+              <p className="text-center text-gray-500">Loading...</p>
+            </div>
+          ) : (
+            <div className="flex items-center justify-center my-5">
+              <button
+                type="submit"
+                className="bg-[#23dc12] hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
+              >
+                Login
+              </button>
+            </div>
+          )}
+          {/* <div className="flex items-center justify-between my-4">
             <Link
               to="/forgot-password"
               className="text-blue-500 hover:underline"
             >
               Forgot Password?
             </Link>
-          </div>
-
-          <div className="flex items-center justify-center my-5">
-            <button
-              type="submit"
-              className="bg-[#23dc12] hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
-            >
-              Login
-            </button>
-          </div>
+          </div> */}
 
           <div className="text-center">
             <p>

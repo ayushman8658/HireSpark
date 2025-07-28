@@ -7,6 +7,8 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { USER_API_ENDPOINT } from "@/utils/data";
 import { toast } from "sonner";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoading } from "@/redux/authSlice"; // adjust the path based on your folder
 
 const Register = () => {
   const [input, setInput] = useState({
@@ -19,6 +21,9 @@ const Register = () => {
   });
 
   const navigate = useNavigate();
+  const loading = useSelector((state) => state.auth.loading);
+  // Access loading state from Redux store
+  const dispatch = useDispatch();
   const changeEventhandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
@@ -37,6 +42,8 @@ const Register = () => {
       formData.append("file", input.file);
     }
     try {
+      // Dispatch loading action
+      dispatch(setLoading(true));
       const response = await axios.post(
         `${USER_API_ENDPOINT}/register`,
         formData,
@@ -59,6 +66,9 @@ const Register = () => {
         ? error.response.data.message
         : "Registration failed. Please try again.";
       toast.error(errorMessage);
+    } finally {
+      // Dispatch loading action to false after the request is complete
+      dispatch(setLoading(false));
     }
   };
   return (
@@ -151,14 +161,21 @@ const Register = () => {
               className="cursor-pointer"
             ></Input>
           </div>
-          <div className="flex items-center justify-center my-5">
-            <button
-              type="submit"
-              className="bg-[#23dc12] hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
-            >
-              Register
-            </button>
-          </div>
+          {loading ? (
+            <div>
+              <p className="text-center text-gray-500">Loading...</p>
+            </div>
+          ) : (
+            <div className="flex items-center justify-center my-5">
+              <button
+                type="submit"
+                className="bg-[#23dc12] hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
+              >
+                Register
+              </button>
+            </div>
+          )}
+
           <div className="text-center">
             <p className="text-md text-gray-600">
               Already have an account?{" "}
