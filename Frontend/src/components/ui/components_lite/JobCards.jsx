@@ -19,16 +19,16 @@ const JobCards = () => {
       </div>
       <div className=" flex gap-2 items-center mt-4 ">
         <Badge className={" text-blue-600 font-bold"} variant={"ghost"}>
-           10 Positions
+          10 Positions
         </Badge>
         <Badge className={" text-[#FA4F09] font-bold"} variant={"ghost"}>
           20LPA
         </Badge>
         <Badge className={" text-[#6B3AC2]  font-bold"} variant={"ghost"}>
-            remote
+          remote
         </Badge>
         <Badge className={" text-black font-bold"} variant={"ghost"}>
-            Full Time
+          Full Time
         </Badge>
       </div>
     </div>
