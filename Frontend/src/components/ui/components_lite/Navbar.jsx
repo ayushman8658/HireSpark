@@ -21,10 +21,18 @@ function Navbar() {
         </div>
         <div className="flex item center gap-10">
           <ul className="flex gap-25 font-medium items-center ">
-            <li>Home</li>
-            <li>Browse</li>
-            <li>Job</li>
-            <li>About</li>
+            <li>
+              <Link to={"/Home"}>Home</Link>
+            </li>
+            <li>
+              <Link to={"/Browse"}>Browse</Link>
+            </li>
+            <li>
+              <Link to={"/Jobs"}>Job</Link>
+            </li>
+            <li>
+              <Link to={"/About"}>About</Link>
+            </li>
           </ul>
           {!user ? (
             <div className="flex items-center gap-2">
@@ -82,6 +90,5 @@ function Navbar() {
     </div>
   );
 }
-
 
 export default Navbar;

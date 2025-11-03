@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./components/ui/components_lite/Home";
 import PrivacyPolicy from "./components/ui/components_lite/PrivacyPolicy";
 import TermsandServices from "./components/ui/components_lite/TermsandServices";
+import Jobs from "./components/ui/components_lite/Jobs.jsx";
 
 const appRouter = createBrowserRouter([
   {
@@ -27,6 +28,14 @@ const appRouter = createBrowserRouter([
   {
     path: "/Terms-of-service",
     element: <TermsandServices />,
+  },
+  {
+    path: "/Jobs",
+    element: <Jobs />,
+  },
+  {
+    path: "/Home",
+    element: <Home />,
   },
 ]);
 
