@@ -2,7 +2,7 @@ import { Company } from "../models/company.model.js";
 //import getDataUri from "../utils/datauri.js";
 //import cloudinary from '../utils/cloud.js';
 
-
+//new changes for testing
 export const registerCompany = async (req, res) => {
     try {
         const { companyName } = req.body;
